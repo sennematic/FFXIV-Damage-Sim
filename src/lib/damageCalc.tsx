@@ -63,23 +63,31 @@ function getCriticalHitChance(criticalHitRate:number, level: number, job:jobMod)
     }
 };
 
-function getDamageDealth(potency:number, determinationModifier:number, attackPowerModifier: number) {
+function getDamageDealt(potency:number, determinationModifier:number, attackPowerModifier: number) {
     return Math.floor(Math.floor(Math.floor(potency * determinationModifier * attackPowerModifier)/100)/1000);
 };
 
 function getWeaponDamage(level:number, job:jobMod, weaponPower:number) {
-    const jobModAttribute = switch (job.mainStat) { 
-        case "Strength": 
-            job.strMod; 
-        case "Dexterity": 
-            job.dexMod;
-        case "Mind":
-            job.mndMod;
-        case "Intelligence":
-            job.intMod;
-        default:
-            job.strMod;
+    let jobModAttribute: number;
+    switch (job.mainStat) { 
+        case "Strength": {
+            jobModAttribute = job.strMod;
+        }
+        case "Dexterity": {
+            jobModAttribute = job.dexMod;
+        }
+        case "Mind":{
+            jobModAttribute = job.mndMod;
+        }
+        case "Intelligence":{
+            jobModAttribute = job.intMod;
+        }
+        default: {
+            jobModAttribute = job.strMod;
+        }
     };
 
     return Math.floor((levelMod100.mainMod * jobModAttribute/1000)+weaponPower);
-}
+}; 
+
+export {getDirectHitChance, getCriticalHitChance, getDamageDealt, getWeaponDamage};
