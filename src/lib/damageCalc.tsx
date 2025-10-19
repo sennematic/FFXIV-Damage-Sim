@@ -10,7 +10,7 @@ const levelMod100:levelMod = {
     mpMod: 10000
 }
 
-function getDirectHitChance(directHitRate:number, level: number, job:jobMod) {
+export function getDirectHitChance(directHitRate:number, level: number, job:jobMod) {
     const mainStatMod = Math.floor(Math.floor(500 * directHitRate - levelMod100.mainMod)/levelMod100.divMod)/10;
     const subStatMod = Math.floor(550 * (directHitRate - levelMod100.subMod)/levelMod100.divMod)/10;
     if(level !== 100) {
@@ -20,7 +20,7 @@ function getDirectHitChance(directHitRate:number, level: number, job:jobMod) {
     }
 }; 
 
-function getCriticalHitChance(criticalHitRate:number, level: number, job:jobMod) {
+export function getCriticalHitChance(criticalHitRate:number, level: number, job:jobMod) {
     const mainStatMod = Math.floor(Math.floor(200*criticalHitRate-levelMod100.mainMod)/levelMod100.divMod+50)/10;
     const subStatMod = Math.floor(200*(criticalHitRate-levelMod100.subMod)/levelMod100.divMod+50)/10;
     
@@ -31,11 +31,11 @@ function getCriticalHitChance(criticalHitRate:number, level: number, job:jobMod)
     }
 };
 
-function getDamageDealt(potency:number, determinationModifier:number, attackPowerModifier: number) {
+export function getDamageDealt(potency:number, determinationModifier:number, attackPowerModifier: number) {
     return Math.floor(Math.floor(Math.floor(potency * determinationModifier * attackPowerModifier)/100)/1000);
 };
 
-function getWeaponDamage(level:number, job:jobMod, weaponPower:number) {
+export function getWeaponDamage(level:number, job:jobMod, weaponPower:number) {
     let jobModAttribute: number;
     switch (job.mainStat) { 
         case "Strength": {
@@ -58,4 +58,4 @@ function getWeaponDamage(level:number, job:jobMod, weaponPower:number) {
     return Math.floor((levelMod100.mainMod * jobModAttribute/1000)+weaponPower);
 }; 
 
-export {getDirectHitChance, getCriticalHitChance, getDamageDealt, getWeaponDamage};
+//export {getDirectHitChance, getCriticalHitChance, getDamageDealt, getWeaponDamage};

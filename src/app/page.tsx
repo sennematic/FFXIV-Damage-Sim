@@ -3,7 +3,7 @@
 import Image from "next/image";
 import {useState} from "react";
 import {getDirectHitChance, getCriticalHitChance, getDamageDealt, getWeaponDamage} from "../lib/damageCalc";
-import { DirectHitRateButton } from "../components/WeaponDamage";
+import {HitRateButton } from "../components/AttributeButtons";
 const jobTest = {
     jobName: "Test",
     jobAbbreviation: "TST",
@@ -44,10 +44,11 @@ export default function Home() {
             Save and see your changes instantly.
           </li>
         </ol>
-        <DirectHitRateButton
+        <HitRateButton
           statValue={394}
           level={100}
           job={jobTest}
+          attribute="Critical Hit Rate"
         />
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
