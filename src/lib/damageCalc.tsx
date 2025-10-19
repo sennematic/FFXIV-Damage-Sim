@@ -1,0 +1,85 @@
+//Functions for handling damage calculations live here
+
+type jobMod = {
+    jobName: string; 
+    jobAbbreviation: string;
+    mainStat: string;
+    hpMod: number; 
+    mpMod: number; 
+    strMod: number;
+    vitMod: number;
+    dexMod: number;
+    intMod: number; 
+    mndMod: number;
+}
+
+type levelMod = {
+    level: number; 
+    mainMod: number; 
+    subMod: number; 
+    divMod: number; 
+    hpMod: number;
+    mpMod: number;
+}
+
+type clanMod = {
+    id: number; 
+    clan: string; 
+    race: string; 
+    strMod: number;
+    dexMod: number; 
+    vitMod: number; 
+    intMod: number;
+    mdnMod: number;
+}
+
+const levelMod100:levelMod = {
+    level: 100, 
+    mainMod: 440, 
+    subMod: 420, 
+    divMod: 2780, 
+    hpMod: 4000,
+    mpMod: 10000
+}
+
+function getDirectHitChance(directHitRate:number, level: number, job:jobMod) {
+    const mainStatMod = Math.floor(Math.floor(500 * directHitRate - levelMod100.mainMod)/levelMod100.divMod)/10;
+    const subStatMod = Math.floor(550 * (directHitRate - levelMod100.subMod)/levelMod100.divMod)/10;
+    if(level !== 100) {
+        return "Error - Invalid level"
+    } else {
+        return {mainStatMod, subStatMod}
+    }
+}; 
+
+function getCriticalHitChance(criticalHitRate:number, level: number, job:jobMod) {
+    const mainStatMod = Math.floor(Math.floor(200*criticalHitRate-levelMod100.mainMod)/levelMod100.divMod+50)/10;
+    const subStatMod = Math.floor(200*(criticalHitRate-levelMod100.subMod)/levelMod100.divMod+50)/10;
+    
+    if (level !== 100) {
+        return "Error - Invalid level"
+    } else {
+        return {mainStatMod, subStatMod}
+    }
+};
+
+function getDamageDealth(potency:number, determinationModifier:number, attackPowerModifier: number) {
+    return Math.floor(Math.floor(Math.floor(potency * determinationModifier * attackPowerModifier)/100)/1000);
+};
+
+function getWeaponDamage(level:number, job:jobMod, weaponPower:number) {
+    const jobModAttribute = switch (job.mainStat) { 
+        case "Strength": 
+            job.strMod; 
+        case "Dexterity": 
+            job.dexMod;
+        case "Mind":
+            job.mndMod;
+        case "Intelligence":
+            job.intMod;
+        default:
+            job.strMod;
+    };
+
+    return Math.floor((levelMod100.mainMod * jobModAttribute/1000)+weaponPower);
+}
